@@ -11,7 +11,7 @@ User.init(
     wallet_balance: {type: DataTypes.DECIMAL(10, 2), defaultValue: 0},
     otp_code: {type: DataTypes.STRING},
     otp_expires: {type: DataTypes.DATE},
-    wrong_count: {type: DataTypes.INTEGER},
+    wrong_count: {type: DataTypes.INTEGER, defaultValue: 0},
     status: {
       type: DataTypes.ENUM("active", "ban", "pending"),
       defaultValue: "pending",
