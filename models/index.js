@@ -18,10 +18,12 @@ Chapter.belongsTo(Course, {
 Chapter.hasMany(Episode, {
   foreignKey: "chapterId",
   as: "episodes",
+  onDelete: "CASCADE",
 });
 Episode.belongsTo(Chapter, {
   foreignKey: "chapterId",
   as: "chapter",
+  onDelete: "CASCADE",
 });
 async function syncModels() {
   await sequelize.sync({alter: true});

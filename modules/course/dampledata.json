@@ -1,0 +1,21 @@
+{
+    "title": "NodeJs",
+    "summary": "nodejs is run time for javascript and created using v8 engine of chrome",
+    "image": "https://storageapi.codenight.ir/courses/1738741984.png",
+    "duration": "50:38",
+    "support": 36,
+    "content": "نود جی اس یک محیط اجرایی یا runtime سمت سرور برای زبان جاوااسکریپت است. یعنی Node به ما این امکان را میدهد تا با جاوااسکریپت برنامه های سمت سرور و بک اند انواع وبسایت ها و اپلیکیشن ها را توسعه بدیم. یکی از محبوب ترین و پر استفاده ترین فریم های ورک های سمت سرور نیز Express JS است که همراه با Nodeدر این دوره به صورت کامل پوشش داده شده است",
+    "chapters": [
+        {
+            "title": "فصل اول",
+            "description": "یادگیری مفاهیم پایه",
+            "episodes": [
+                {
+                    "title": "first episdoe",
+                    "type": "free",
+                    "videoUrl": "https://codenight-storage.storage.iran.liara.space/video/html-css/1-intro.mp4"
+                }
+            ]
+        }
+    ]
+}

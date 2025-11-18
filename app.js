@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const {syncModels} = require("./models/index");
+const {syncModels, User} = require("./models/index");
 const {AllRoutes} = require("./modules/index.routes");
 const app = express();
 syncModels()
@@ -10,7 +10,6 @@ syncModels()
   .catch((err) => {
     console.log("Sync error", err);
   });
-
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(AllRoutes);
