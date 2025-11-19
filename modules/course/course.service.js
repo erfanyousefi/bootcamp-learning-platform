@@ -1,8 +1,17 @@
 const createHttpError = require("http-errors");
-const {Course, Chapter, Episode} = require("../../models");
+const {Course, Chapter, Episode, User} = require("../../models");
 
 async function createCourse(data) {
-  const {title, summary, image, duration, support, content, chapters} = data;
+  const {
+    title,
+    summary,
+    image,
+    duration,
+    support,
+    content,
+    chapters,
+    teacherId,
+  } = data;
   let course = await Course.create({
     title,
     summary,
@@ -10,6 +19,7 @@ async function createCourse(data) {
     duration,
     support,
     content,
+    teacherId,
   });
   let chapterIndex = 1;
   if (Array.isArray(chapters)) {
@@ -48,6 +58,13 @@ async function findAllCourse() {
   const courses = await Course.findAll({
     where: {},
     attributes: ["id", "title", "image", "duration", "summary"],
+    include: [
+      {
+        model: User,
+        as: "teacher",
+        attributes: ["id", "firstname", "lastname", "avatar"],
+      },
+    ],
   });
   return {
     error: null,

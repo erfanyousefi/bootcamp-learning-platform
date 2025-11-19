@@ -26,6 +26,9 @@ Course.init(
     content: {
       type: DataTypes.TEXT,
     },
+    teacherId: {
+      type: DataTypes.INTEGER,
+    },
   },
   {
     sequelize: sequelize,

@@ -8,10 +8,12 @@ const {
 //{chapters: [ {..., episodes: [{}, {}, {}]}  ]}
 
 async function createCourseHandler(req, res, next) {
+  const {id: userId} = req.user;
   const {title, summary, image, duration, support, content, chapters} =
     req.body;
   const data = {
     title,
+    teacherId: userId,
     summary,
     image,
     duration,

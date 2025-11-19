@@ -28,6 +28,7 @@ async function CheckAuth(req, res, next) {
         avatar: user?.avatar,
         wallet_balance: user?.wallet_balance,
         status: user?.status,
+        role: user?.role,
       };
       return next();
     }
