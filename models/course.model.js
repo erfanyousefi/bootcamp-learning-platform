@@ -23,6 +23,18 @@ Course.init(
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    price: {
+      type: DataTypes.DECIMAL,
+      defaultValue: 0,
+    },
+    discount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    activeDiscount: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     content: {
       type: DataTypes.TEXT,
     },

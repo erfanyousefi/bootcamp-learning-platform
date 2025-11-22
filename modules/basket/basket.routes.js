@@ -1,12 +1,11 @@
 const {
   addToBasketHandler,
   deleteFromBasketHandler,
+  findUserBasketHandler,
 } = require("./basket.controller");
 
 const router = require("express").Router();
-router.get("/", (req, res, next) => {
-  res.send("coming soon...");
-});
+router.get("/", findUserBasketHandler);
 router.post("/:courseId", addToBasketHandler);
 router.delete("/:courseId", deleteFromBasketHandler);
 module.exports = {

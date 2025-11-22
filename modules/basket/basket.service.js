@@ -1,6 +1,8 @@
 const createHttpError = require("http-errors");
 const BasketItem = require("../../models/baske-items.model");
 const Basket = require("../../models/basket.model");
+const {Course} = require("../../models");
+const {getDiscountAmount} = require("../../common/utils/discount.util");
 
 async function addToBasket(courseId, userId) {
   let basket = await Basket.findOne({where: {userId}});
@@ -49,8 +51,69 @@ async function deleteFromBasket(courseId, userId) {
     },
   };
 }
+async function getBasket(userId) {
+  const basketItems = await Basket.findOne({
+    where: {userId},
+    include: [
+      {
+        model: BasketItem,
+        as: "items",
+        include: {
+          model: Course,
+          as: "course",
+        },
+      },
+    ],
+  });
+  let basket = [];
+  let totalAmount = 0;
+  let finalAmount = 0;
+  let discountAmount = 0;
+  for (const item of basketItems.items) {
+    const {course} = item;
+    if (!course) continue;
+    let totalCourseAmount = course?.price ?? 0;
+    let finalCourseAmount = totalCourseAmount;
+    let discountCourseAmount = 0;
+    if (course?.activeDiscount && course?.discount > 0) {
+      discountCourseAmount = getDiscountAmount(
+        totalCourseAmount,
+        course.discount
+      );
+      finalCourseAmount -= discountCourseAmount;
+    }
+    totalAmount += Number(totalCourseAmount);
+    finalAmount += Number(finalCourseAmount);
+    discountAmount += Number(discountCourseAmount);
+    basket.push({
+      discountAmount: discountCourseAmount,
+      totalAmount: totalCourseAmount,
+      finalAmount: finalCourseAmount,
+      course: {
+        id: course.id,
+        title: course.title,
+        summary: course.summary,
+        image: course.image,
+        price: course.price,
+        discount: course.discount,
+        activeDiscount: course.activeDiscount,
+      },
+    });
+  }
+  return {
+    error: null,
+    data: {
+      totalAmount,
+      finalAmount,
+      discountAmount,
+      basket,
+    },
+  };
+}
 
+//checkout-basket
 module.exports = {
   addToBasket,
   deleteFromBasket,
+  getBasket,
 };

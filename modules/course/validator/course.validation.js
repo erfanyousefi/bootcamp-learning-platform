@@ -5,7 +5,11 @@ const createCourseValidator = [
   body("summary").notEmpty().withMessage("summary is required"),
   body("image").isURL().withMessage("image must be a valid url"),
   body("duration").notEmpty().withMessage("duration is required"),
-  body("support").isNumeric().withMessage("support must ne a number"),
+  body("support").isNumeric().withMessage("support must be a number"),
+  body("discount").isNumeric().withMessage("discount must be a number"),
+  body("activeDiscount")
+    .isBoolean()
+    .withMessage("activeDiscount must be a boolean"),
   body("content").notEmpty().withMessage("content is required"),
 
   //chapter array

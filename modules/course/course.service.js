@@ -11,7 +11,12 @@ async function createCourse(data) {
     content,
     chapters,
     teacherId,
+    discount,
+    activeDiscount,
   } = data;
+  if (discount && (discount < 0 || discount > 100)) {
+    throw createHttpError("discount value must be in 0 - 100 range");
+  }
   let course = await Course.create({
     title,
     summary,
@@ -20,6 +25,8 @@ async function createCourse(data) {
     support,
     content,
     teacherId,
+    discount,
+    activeDiscount,
   });
   let chapterIndex = 1;
   if (Array.isArray(chapters)) {
