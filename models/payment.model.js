@@ -4,9 +4,9 @@ const sequelize = require("../config/database");
 class Payment extends Model {}
 Payment.init(
   {
+    total: {type: DataTypes.DECIMAL},
     amount: {type: DataTypes.DECIMAL},
     discount: {type: DataTypes.DECIMAL},
-    total: {type: DataTypes.DECIMAL},
     userId: {type: DataTypes.INTEGER, allowNull: false},
     ref_number: {type: DataTypes.STRING},
     status: {
@@ -21,4 +21,4 @@ Payment.init(
   }
 );
 
-module.exports = User;
+module.exports = Payment;

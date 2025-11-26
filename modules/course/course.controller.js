@@ -3,6 +3,7 @@ const {
   findAllCourse,
   findOneByIdCourse,
   deleteCourse,
+  findMyCourses,
 } = require("./course.service");
 
 //{chapters: [ {..., episodes: [{}, {}, {}]}  ]}
@@ -39,6 +40,11 @@ async function deleteCourseHandler(req, res, next) {
   const result = await deleteCourse(id);
   res.json(result);
 }
+async function myCourseListHandler(req, res, next) {
+  const {id} = req.user;
+  const result = await findMyCourses(id);
+  res.json(result);
+}
 
 module.exports = {
   createCourseHandler,
@@ -46,4 +52,5 @@ module.exports = {
   findAllCourseHandler,
   findOneByIdCourseHandler,
   deleteCourseHandler,
+  myCourseListHandler,
 };

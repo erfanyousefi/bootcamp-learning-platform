@@ -5,7 +5,7 @@ class UserCourse extends Model {}
 UserCourse.init(
   {
     userId: {type: DataTypes.INTEGER},
-    paymentId: {type: DataTypes.INTEGER},
+    detailId: {type: DataTypes.INTEGER},
     courseId: {type: DataTypes.INTEGER},
     spotplayerKey: {type: DataTypes.TEXT},
     description: {type: DataTypes.TEXT},
@@ -21,4 +21,4 @@ UserCourse.init(
   }
 );
 
-module.exports = User;
+module.exports = UserCourse;

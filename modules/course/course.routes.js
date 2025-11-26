@@ -4,12 +4,14 @@ const {
   findAllCourseHandler,
   findOneByIdCourseHandler,
   deleteCourseHandler,
+  myCourseListHandler,
 } = require("./course.controller");
 const {createCourseValidator} = require("./validator/course.validation");
 
 const router = require("express").Router();
 router.post("/", createCourseValidator, validate, createCourseHandler);
 router.get("/", findAllCourseHandler);
+router.get("/my-list", myCourseListHandler);
 router.get("/:id", findOneByIdCourseHandler);
 router.delete("/:id", deleteCourseHandler);
 module.exports = {

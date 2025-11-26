@@ -5,9 +5,13 @@ const Basket = require("./basket.model");
 const Chapter = require("./chapter.model");
 const Course = require("./course.model");
 const Episode = require("./episode.model");
+const PaymentDetails = require("./payment-detail.model");
+const Payment = require("./payment.model");
+const UserCourse = require("./user-course.model");
 const User = require("./user.model");
 
 // course -> chapter
+//one to many
 Course.hasMany(Chapter, {
   foreignKey: "courseId",
   as: "chapters",
@@ -83,7 +87,60 @@ BasketCoupon.belongsTo(Basket, {
   foreignKey: "basketId",
   as: "basket",
 });
+Payment.hasMany(PaymentDetails, {
+  foreignKey: "paymentId",
+  as: "details",
+});
+PaymentDetails.belongsTo(Payment, {
+  foreignKey: "paymentId",
+  as: "payment",
+});
+User.hasMany(Payment, {
+  foreignKey: "userId",
+  as: "user",
+  onDelete: "CASCADE",
+});
+Payment.belongsTo(User, {
+  foreignKey: "userId",
+  as: "user",
+});
+PaymentDetails.hasOne(UserCourse, {
+  foreignKey: "detailId",
+  as: "userCourse",
+  onDelete: "CASCADE",
+});
+UserCourse.belongsTo(PaymentDetails, {
+  foreignKey: "detailId",
+  as: "paymentDetail",
+});
 
+User.hasMany(UserCourse, {
+  foreignKey: "userId",
+  as: "userCourses",
+  onDelete: "CASCADE",
+});
+UserCourse.belongsTo(User, {
+  foreignKey: "userId",
+  as: "user",
+});
+Course.hasMany(UserCourse, {
+  foreignKey: "courseId",
+  as: "usersCourseList",
+  onDelete: "CASCADE",
+});
+UserCourse.belongsTo(Course, {
+  foreignKey: "courseId",
+  as: "course",
+});
+Course.hasMany(PaymentDetails, {
+  foreignKey: "courseId",
+  as: "paymentDetails",
+  onDelete: "CASCADE",
+});
+PaymentDetails.belongsTo(Course, {
+  foreignKey: "courseId",
+  as: "course",
+});
 async function syncModels() {
   await sequelize.sync({alter: true});
 }

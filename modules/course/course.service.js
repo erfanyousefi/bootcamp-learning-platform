@@ -1,5 +1,7 @@
 const createHttpError = require("http-errors");
 const {Course, Chapter, Episode, User} = require("../../models");
+const UserCourse = require("../../models/user-course.model");
+const PaymentDetails = require("../../models/payment-detail.model");
 
 async function createCourse(data) {
   const {
@@ -95,6 +97,28 @@ async function findOneByIdCourse(id) {
     data: course,
   };
 }
+async function findMyCourses(userId) {
+  const courses = await UserCourse.findAll({
+    where: {userId},
+    attributes: ["id", "status", "description", "createdAt", "spotplayerKey"],
+    include: [
+      {
+        model: Course,
+        as: "course",
+        attributes: ["id", "title", "image", "summary", "price"],
+      },
+      {
+        model: PaymentDetails,
+        as: "paymentDetail",
+        attributes: ["id", "total", "amount", "discount", "paymentId"],
+      },
+    ],
+  });
+  return {
+    error: null,
+    data: courses,
+  };
+}
 async function deleteCourse(id) {
   const {data: course} = await findOneByIdCourse(id);
   await Course.destroy({
@@ -113,4 +137,5 @@ module.exports = {
   findAllCourse,
   findOneByIdCourse,
   deleteCourse,
+  findMyCourses,
 };
