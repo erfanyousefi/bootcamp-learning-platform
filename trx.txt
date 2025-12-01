@@ -1,0 +1,15 @@
+Transactions
+ACID => Atomicity, Consistency, Isolation, Durability
+(get cash | pay bill | bank app charge)
+//cart-to-cart
+destination
+amount
+balance - amount
+await user.save(user).
+//Boom, turn off, network
+destination.balance + amount
+await user.save(destination)
+sequelize.commit()
+sequelite.rollback()
+lock = 1
+lock = 0

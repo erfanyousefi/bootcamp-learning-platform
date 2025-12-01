@@ -7,8 +7,10 @@ const Course = require("./course.model");
 const Episode = require("./episode.model");
 const PaymentDetails = require("./payment-detail.model");
 const Payment = require("./payment.model");
+const Transaction = require("./transactions");
 const UserCourse = require("./user-course.model");
 const User = require("./user.model");
+const Wallet = require("./wallet");
 
 // course -> chapter
 //one to many
@@ -140,6 +142,24 @@ Course.hasMany(PaymentDetails, {
 PaymentDetails.belongsTo(Course, {
   foreignKey: "courseId",
   as: "course",
+});
+Wallet.hasMany(Transaction, {
+  foreignKey: "walletId",
+  as: "transactions",
+  onDelete: "CASCADE",
+});
+Transaction.belongsTo(Wallet, {
+  foreignKey: "walletId",
+  as: "wallet",
+});
+User.hasOne(Wallet, {
+  foreignKey: "userId",
+  as: "wallet",
+  onDelete: "CASCADE",
+});
+Wallet.belongsTo(User, {
+  foreignKey: "userId",
+  as: "user",
 });
 async function syncModels() {
   await sequelize.sync({alter: true});

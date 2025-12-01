@@ -1,6 +1,7 @@
 const createHttpError = require("http-errors");
 const jsonwebtoken = require("jsonwebtoken");
 const {User} = require("../../models");
+const Wallet = require("../../models/wallet");
 
 async function CheckAuth(req, res, next) {
   const {authorization = null} = req.headers;
@@ -18,7 +19,14 @@ async function CheckAuth(req, res, next) {
   try {
     const decoded = jsonwebtoken.verify(token, process.env.TOKEN_SECRET_KEY);
     if (decoded?.userId) {
-      const user = await User.findByPk(decoded.userId);
+      const user = await User.findByPk(decoded.userId, {
+        include: [
+          {
+            model: Wallet,
+            as: "wallet",
+          },
+        ],
+      });
       if (!user) throw createHttpError(401, "notfound account!");
       req.user = {
         id: user.id,
@@ -26,7 +34,7 @@ async function CheckAuth(req, res, next) {
         lastname: user?.lastname,
         mobile: user?.mobile,
         avatar: user?.avatar,
-        wallet_balance: user?.wallet_balance,
+        wallet_balance: user?.wallet?.balance ?? 0,
         status: user?.status,
         role: user?.role,
       };
